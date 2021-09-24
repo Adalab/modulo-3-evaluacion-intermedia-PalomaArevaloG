@@ -73,10 +73,10 @@ function App() {
 				</form> */}
 			</header>
 			<main>
-				<ul>{htmlClubList}</ul>
+				<ul className="club__list">{htmlClubList}</ul>
 
-				<form className="new-contact__form">
-					<h2 className="new-contact__title">Añade un nuevo club</h2>
+				<form className="new-club__form">
+					<h2 className="new-club__title">Añade un nuevo club</h2>
 					Nombre{' '}
 					<input
 						className="new-club__input"
@@ -106,7 +106,7 @@ function App() {
 						checked={newWeekend ? true : false}
 					/>
 					<input
-						className="new-contact__btn"
+						className="new-club__btn"
 						type="submit"
 						value="Añadir"
 						onClick={handleClick}
