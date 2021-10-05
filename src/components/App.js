@@ -5,24 +5,19 @@ import { useState } from 'react';
 
 function App() {
 	const [data, setData] = useState(initialData);
-	const [name, setName] = useState('');
-	const [openOnWeekdays, setOpenOnWeekdays] = useState('');
-	const [openOnWeekend, setOpenOnWeekend] = useState('');
+
 	const [newName, setNewName] = useState('');
-	const [newWeekdays, setNewWeekdays] = useState('');
-	const [newWeekend, setNewWeekend] = useState('');
+	const [newWeekdays, setNewWeekdays] = useState(false);
+	const [newWeekend, setNewWeekend] = useState(false);
 
 	const handleNewName = (ev) => {
 		setNewName(ev.currentTarget.value);
-		setName(ev.target.value);
 	};
 	const handleNewWeekdays = (ev) => {
-		setNewWeekdays(ev.currentTarget.value);
-		setOpenOnWeekdays(ev.target.value);
+		setNewWeekdays(ev.currentTarget.checked);
 	};
 	const handleNewWeekend = (ev) => {
-		setNewWeekend(ev.currentTarget.value);
-		setOpenOnWeekend(ev.target.value);
+		setNewWeekend(ev.currentTarget.checked);
 	};
 
 	const handleClick = (ev) => {
@@ -86,11 +81,12 @@ function App() {
 						placeholder="Nombre"
 						onChange={handleNewName}
 						value={newName}
+						required
 					/>
 					¿Abre entre semana?
 					<input
 						className="new-club__input"
-						type="radio"
+						type="checkbox"
 						name="weekdays"
 						id="weekdays"
 						onChange={handleNewWeekdays}
@@ -99,7 +95,7 @@ function App() {
 					¿Abre los fines de semana?
 					<input
 						className="new-club__input"
-						type="radio"
+						type="checkbox"
 						name="weekend"
 						id="weekend"
 						onChange={handleNewWeekend}
