@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 function App() {
 	const [data, setData] = useState(initialData);
-
 	const [newName, setNewName] = useState('');
 	const [newWeekdays, setNewWeekdays] = useState(false);
 	const [newWeekend, setNewWeekend] = useState(false);
+	const [filter, setFilter] = useState('all');
 
 	const handleNewName = (ev) => {
 		setNewName(ev.currentTarget.value);
@@ -18,6 +18,9 @@ function App() {
 	};
 	const handleNewWeekend = (ev) => {
 		setNewWeekend(ev.currentTarget.checked);
+	};
+	const handleFilter = (ev) => {
+		setFilter(ev.target.value);
 	};
 
 	const handleClick = (ev) => {
@@ -35,37 +38,56 @@ function App() {
 	};
 	//render html
 
-	const htmlClubList = data.map((oneClub, index) => (
-		<li key={index} className="club__item">
-			<p className="club__name">
-				<label className="club__label">
-					{`#${index}: ${oneClub.name}`}
-				</label>
-			</p>
-			<p className="club__openWeekdays">
-				<label className="club__label">
-					{`Abierto entre semana:${
-						oneClub.openOnWeekdays ? `Si` : `No`
-					}`}
-				</label>
-			</p>
-			<p className="club__openWeekend">
-				<label className="club__label">
-					{`Abierto el fin de semana:${
-						oneClub.openOnWeekend ? `Si` : `No`
-					}`}
-				</label>
-			</p>
-		</li>
-	));
+	const htmlClubList = data
+		.filter((oneClub) => {
+			if (filter === 'openOnWeekDays') {
+				return oneClub.openOnWeekdays === true;
+			} else if (filter === 'openOnWeekend') {
+				return oneClub.openOnWeekend === true;
+			}
+			return true;
+		})
+		.map((oneClub, index) => (
+			<li key={index} className="club__item">
+				<p className="club__name">
+					<label className="club__label">
+						{`#${index}: ${oneClub.name}`}
+					</label>
+				</p>
+				<p className="club__openWeekdays">
+					<label className="club__label">
+						{`Abierto entre semana:${
+							oneClub.openOnWeekdays ? `Si` : `No`
+						}`}
+					</label>
+				</p>
+				<p className="club__openWeekend">
+					<label className="club__label">
+						{`Abierto el fin de semana:${
+							oneClub.openOnWeekend ? `Si` : `No`
+						}`}
+					</label>
+				</p>
+			</li>
+		));
 	return (
 		<div>
 			{/* header */}
 			<header className="header">
 				<h1 className="header__title">Mis clubs</h1>
-				{/* <form>
-					aquí irá el filtrado del listado de clubs
-				</form> */}
+				<form>
+					<select value={filter} onChange={handleFilter}>
+						<option value="all"> Todos</option>
+						<option value="openOnWeekDays">
+							{' '}
+							Abren entre semana
+						</option>
+						<option value="openOnWeekend">
+							{' '}
+							Abren fines de semana
+						</option>
+					</select>
+				</form>
 			</header>
 			<main>
 				<ul className="club__list">{htmlClubList}</ul>
